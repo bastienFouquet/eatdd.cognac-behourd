@@ -1,40 +1,33 @@
-const xlsx = require('xlsx');
-
-const filePath = process.argv.slice(2)[0];
-const workbook = xlsx.readFile(filePath);
-const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-
-let posts = [];
-let post = {};
-
-for (let cell in worksheet) {
-    const cellAsString = cell.toString();
-
+var xlsx = require('xlsx');
+var filePath = process.argv.slice(2)[0];
+var workbook = xlsx.readFile(filePath);
+var worksheet = workbook.Sheets[workbook.SheetNames[0]];
+var posts = [];
+var post = {};
+for (var cell in worksheet) {
+    var cellAsString = cell.toString();
     if (cellAsString[1] !== 'r' && cellAsString[1] !== 'm' && cellAsString[1] > 1) {
         if (cellAsString[0] === 'A') {
-            post.nom = worksheet[cell].v;
+            post.name = worksheet[cell].v;
         }
         if (cellAsString[0] === 'B') {
-            post.prenom = worksheet[cell].v;
+            post.firstname = worksheet[cell].v;
         }
         if (cellAsString[0] === 'C') {
-            post.poids = worksheet[cell].v;
+            post.weight = worksheet[cell].v;
         }
         if (cellAsString[0] === 'D') {
-            post.annee_adhesion = worksheet[cell].v;
+            post.year_register = worksheet[cell].v;
         }
         if (cellAsString[0] === 'E') {
-            post.arme = worksheet[cell].v;
+            post.weapon = worksheet[cell].v;
         }
         if (cellAsString[0] === 'F') {
-            post.armure = worksheet[cell].v;
+            post.armor = worksheet[cell].v;
             posts.push(post);
             post = {};
         }
     }
 }
-
 console.log(posts);
-
-
 //node .\src\import-xlsx.js .\files\Exemple.xlsx <-- pour lancer
