@@ -13,9 +13,21 @@ export class Person {
     this.firstname = firstname;
     this.lastname = lastname;
     this.weightCategory = weightCategory;
-    this.weight = (weightCategory.max + weightCategory.min) / 2;
+    this.weight = Person.calculateWeight(weightCategory);
     this.weapon = weapon;
     this.armor = 'Gambison';
     this.yearRegistration = null;
+  }
+
+  private static calculateWeight(weightCategory: WeightCategory): number {
+    if (weightCategory.min !== null && weightCategory.max !== null) {
+      return (weightCategory.max + weightCategory.min) / 2;
+    } else {
+      if (weightCategory.max !== null) {
+        return weightCategory.max;
+      } else {
+        return weightCategory.min;
+      }
+    }
   }
 }
