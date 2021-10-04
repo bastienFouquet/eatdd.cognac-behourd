@@ -21,10 +21,10 @@ for (let cell in worksheet) {
             post.poids = worksheet[cell].v;
         }
         if (cellAsString[0] === 'D') {
-            post.author = worksheet[cell].v;
+            post.annee_adhesion = worksheet[cell].v;
         }
         if (cellAsString[0] === 'E') {
-            post.annee_adhesion = worksheet[cell].v;
+            post.arme = worksheet[cell].v;
         }
         if (cellAsString[0] === 'F') {
             post.armure = worksheet[cell].v;
@@ -35,3 +35,6 @@ for (let cell in worksheet) {
 }
 
 console.log(posts);
+
+
+//node .\src\import-xlsx.js .\files\Exemple.xlsx <-- pour lancer
