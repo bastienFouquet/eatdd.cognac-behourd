@@ -22,7 +22,7 @@ describe('Person', () => {
         armor: 'Mailles',
         yearRegistration: 2000
       });
-      expect(person.weight).toBe(54.5);
+      expect(person.weight).toBe(56);
       expect(person.armor).toBe('Gambison');
     });
   });
