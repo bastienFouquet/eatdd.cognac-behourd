@@ -2,11 +2,14 @@ import { importXlsx } from "../../src/helpers/import-xlsx";
 
 describe('importXlsx', () =>{
     describe('importFileFromDisk', () =>{
-        it('create persons from xlsx file from disk', () => {
-            persons[]=importXlsx('../../files/Exemple.xlsx');
+        it('xlsx file have a good path', () => {
+            const path = '../../files/Exemple.xlsx';
 
-        })
-        }
-    )
-    }
-)
+        });
+        it('xlsx file is not xlsx', () => {
+            expect(() => {
+                importXlsx('.xlsx');
+            }).toThrowError();
+        });
+    });
+});
