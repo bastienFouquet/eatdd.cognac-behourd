@@ -23,7 +23,6 @@ describe('Person', () => {
         yearRegistration: 2000
       });
       expect(person.weight).toBe(56);
-      expect(person.armor).toBe('Gambison');
     });
   });
 });
