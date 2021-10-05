@@ -1,14 +1,9 @@
-import { Person } from "./classes/Person";
+import { Person } from "../classes/Person";
 
 
 export function importXlsx(path: string): Person[] {
     const xlsx = require('xlsx');
 
-/*export function importXlsx(path: string) {
-    const xlsx = require('xlsx');*/
-
-
-const filePath = process.argv.slice(2)[0];
 const workbook = xlsx.readFile(path);
 const worksheet = workbook.Sheets[workbook.SheetNames[0]];
 
@@ -53,4 +48,3 @@ return persons
 
 }
 
-//node .\src\import-xlsx.js .\files\Exemple.xlsx <-- pour lancer
