@@ -7,10 +7,14 @@ import {existsSync} from "fs";
 export function importXlsx(path: string): Person[] {
     const xlsx = require('xlsx');
 
+    const extension = path.split('.').pop();
+    if (extension !== 'xlsx'){
+        throw new Error('Wrong type of file !');
+    }
+
     if (!existsSync(path)) {
         throw new Error('No such file !');
     }
-    //if (!existsSync())
 
     const workbook = xlsx.readFile(path);
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
