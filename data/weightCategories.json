@@ -1,0 +1,50 @@
+[
+  {
+    "label": "Mouche",
+    "max": 52,
+    "min": null,
+    "id": 1
+  },
+  {
+    "label": "Plume",
+    "min": 52,
+    "max": 57,
+    "id": 2
+  },
+  {
+    "label": "Léger",
+    "min": 57,
+    "max": 63,
+    "id": 3
+  },
+  {
+    "label": "Welters",
+    "min": 63,
+    "max": 69,
+    "id": 4
+  },
+  {
+    "label": "Moyens",
+    "min": 69,
+    "max": 75,
+    "id": 5
+  },
+  {
+    "label": "Mi-lourd",
+    "min": 75,
+    "max": 81,
+    "id": 6
+  },
+  {
+    "label": "Lourd",
+    "min": 81,
+    "max": 91,
+    "id": 7
+  },
+  {
+    "label": "Super-lourd",
+    "max": null,
+    "min": 91,
+    "id": 8
+  }
+]

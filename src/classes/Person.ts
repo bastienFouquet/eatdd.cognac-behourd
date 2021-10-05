@@ -1,4 +1,15 @@
 import {WeightCategory} from './WeightCategory';
+import {WeightCategoryService} from '../services/WeightCategoryService';
+
+interface IPerson {
+  firstname: string;
+  lastname: string;
+  yearRegistration?: number;
+  weight?: number;
+  weightCategory?: WeightCategory;
+  weapon: string;
+  armor?: string;
+}
 
 export class Person {
   public firstname: string;
@@ -9,14 +20,19 @@ export class Person {
   public weapon: string;
   public armor: string;
 
-  constructor(firstname, lastname, weightCategory, weapon) {
+  constructor({firstname, lastname, weightCategory, weight, weapon, armor, yearRegistration}: IPerson) {
     this.firstname = firstname;
     this.lastname = lastname;
-    this.weightCategory = weightCategory;
-    this.weight = Person.calculateWeight(weightCategory);
+    if (weightCategory && !weight) {
+      this.weightCategory = weightCategory;
+      this.weight = Person.calculateWeight(weightCategory);
+    } else {
+      this.weightCategory = WeightCategoryService.getInstance().findOneByWeight(weight);
+      this.weight = weight;
+    }
     this.weapon = weapon;
-    this.armor = 'Gambison';
-    this.yearRegistration = null;
+    this.armor = armor ? armor : 'Gambison'
+    this.yearRegistration = yearRegistration ? yearRegistration : null;
   }
 
   private static calculateWeight(weightCategory: WeightCategory): number {
@@ -29,5 +45,13 @@ export class Person {
         return weightCategory.min;
       }
     }
+  }
+
+  public getSeniority(): number {
+    const seniority = new Date().getFullYear() - this.yearRegistration;
+    if (Math.sign(seniority) === -1) {
+      throw new Error('Seniority cannnot be negative');
+    }
+    return seniority;
   }
 }
