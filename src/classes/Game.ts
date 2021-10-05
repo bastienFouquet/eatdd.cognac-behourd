@@ -9,6 +9,10 @@ export class Game {
         this.teamA = new Team();
         this.teamB = new Team();
 
+        this.balanceTeams(members);
+    }
+
+    public balanceTeams(members: Person[]){
         this.teamA.members.push(members[members.length-1]);
         members.pop();
         this.teamB.members.push(members[members.length-1]);
