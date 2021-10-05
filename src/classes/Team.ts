@@ -9,12 +9,10 @@ export class Team{
 
     public getAverageWeight(): number {
         let totalWeight = 0;
-        console.log(this.members.length);
 
         this.members.map((member) => {
             totalWeight += member.weight;
         })
-        console.log(totalWeight);
         return totalWeight/this.members.length;
     }
 
