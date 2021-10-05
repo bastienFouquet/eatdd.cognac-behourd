@@ -1,5 +1,5 @@
 import {WeightCategoryService} from './services/WeightCategoryService';
-import { importXlsx } from "./helpers/import-xlsx";
+import { importXlsx } from "./helpers/importXlsx";
 import * as readline from 'readline';
 
 async function run() {
@@ -18,5 +18,3 @@ async function run() {
 }
 
 run();
-
-// ./files/Exemple.xlsx

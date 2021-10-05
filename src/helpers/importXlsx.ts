@@ -1,35 +1,23 @@
 import {Person} from "../classes/Person";
 import {existsSync} from "fs";
 
-
-
-
 export function importXlsx(path: string): Person[] {
     const xlsx = require('xlsx');
-
     const extension = path.split('.').pop();
-    if (extension !== 'xlsx'){
+    if (extension !== 'xlsx') {
         throw new Error('Wrong type of file !');
     }
-
     if (!existsSync(path)) {
         throw new Error('No such file !');
     }
-
     const workbook = xlsx.readFile(path);
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-
-
-
-    let posts = [];
+    const posts = [];
     const persons: Person[] = [];
-    let post: any = {};
-
-    for (let cell in worksheet) {
+    const post: any = {};
+    for (const cell in worksheet) {
         const cellAsString: any = cell.toString();
-
         if (cellAsString[1] !== 'r' && cellAsString[1] !== 'm' && cellAsString[1] > 1) {
-
             if (cellAsString[0] === 'A') {
                 post.name = worksheet[cell].v;
             }
@@ -57,15 +45,9 @@ export function importXlsx(path: string): Person[] {
                     armor: post.armor
                 });
                 persons.push(person)
-
-                console.log(person)
             }
         }
     }
-
-
-//console.log(posts);
     return persons
-
 }
 

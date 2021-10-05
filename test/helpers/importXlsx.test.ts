@@ -1,4 +1,5 @@
-import { importXlsx } from "../../src/helpers/import-xlsx";
+import { importXlsx } from "../../src/helpers/importXlsx";
+import {Person} from "../../src/classes/Person";
 
 describe('importXlsx', () =>{
     describe('importFileFromDisk', () =>{
@@ -14,11 +15,9 @@ describe('importXlsx', () =>{
                 importXlsx(path);
             }).toThrowError();
         });
-        it('xlsx file is not xlsx', () => {
-            const path = '../../files/ExempleFaux.xlsx';
-            expect(() => {
-                importXlsx(path);
-            }).toThrowError();
+        it('file should get persons', () => {
+            const path = 'files/Exemple.xlsx';
+            expect(importXlsx(path)[0]).toBeInstanceOf(Person);
         });
     });
 });
