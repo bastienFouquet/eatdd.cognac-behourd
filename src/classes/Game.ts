@@ -8,7 +8,7 @@ export class Game {
   constructor(members: Person[]) {
     this.teamA = new Team();
     this.teamB = new Team();
-    this.balanceTeams(members);
+    this.balanceTeams([...members]);
   }
 
   public balanceTeams(members: Person[]) {

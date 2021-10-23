@@ -41,6 +41,7 @@
     "node": "14.17.6"
   },
   "dependencies": {
+    "readline-sync": "^1.4.10",
     "xlsx": "^0.17.2"
   }
 }

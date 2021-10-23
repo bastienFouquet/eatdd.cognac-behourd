@@ -1,16 +1,17 @@
 import {Person} from "../classes/Person";
 import {existsSync} from "fs";
+import path from 'path';
+const xlsx = require('xlsx');
 
-export function importXlsx(path: string): Person[] {
-    const xlsx = require('xlsx');
-    const extension = path.split('.').pop();
+export function importXlsx(pathFile: string): Person[] {
+    const extension = pathFile.split('.').pop();
     if (extension !== 'xlsx') {
         throw new Error('Wrong type of file !');
     }
-    if (!existsSync(path)) {
+    if (!existsSync(path.resolve(pathFile))) {
         throw new Error('No such file !');
     }
-    const workbook = xlsx.readFile(path);
+    const workbook = xlsx.readFile(path.resolve(pathFile));
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     const posts = [];
     const persons: Person[] = [];
@@ -25,7 +26,7 @@ export function importXlsx(path: string): Person[] {
                 post.firstname = worksheet[cell].v;
             }
             if (cellAsString[0] === 'C') {
-                post.weight = worksheet[cell].v;
+                post.weight = Number(worksheet[cell].v.replace('kg', ''));
             }
             if (cellAsString[0] === 'D') {
                 post.yearRegistration = worksheet[cell].v;
