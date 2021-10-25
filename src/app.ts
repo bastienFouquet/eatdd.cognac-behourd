@@ -1,13 +1,15 @@
 import {importXlsx} from "./helpers/importXlsx";
 import {WeightCategoryService} from './services/WeightCategoryService';
 import {Person} from './classes/Person';
+import {GameSession} from './classes/GameSession';
+import {Game} from './classes/Game';
 
 const reader = require('readline-sync');
-let persons: Person[] = [];
+const session = new GameSession();
 
-function printPlayers() {
+function printPlayers(players: Person[]) {
   console.log('Vos joueurs : ');
-  console.table(persons.map((el) => {
+  console.table(players.map((el) => {
     return {...el, weightCategory: el.weightCategory.label}
   }));
 }
@@ -15,7 +17,7 @@ function printPlayers() {
 async function fileQuestion(): Promise<void> {
   try {
     const pathFile = await reader.question('Veuillez indiquer le chemin du fichier xlsx afin d\'importer les équipes : ');
-    persons = importXlsx(pathFile);
+    session.addPlayers(importXlsx(pathFile));
     console.log('Vos joueurs on été importés');
   } catch (e) {
     console.log(e.message);
@@ -23,7 +25,7 @@ async function fileQuestion(): Promise<void> {
   }
 }
 
-async function addPerson(): Promise<void> {
+async function addPlayer(): Promise<void> {
   try {
     const isToAdd: string = await reader.question('Voulez-vous ajouter une personne ? [Y/N] ');
     switch (isToAdd.toLowerCase()) {
@@ -41,26 +43,49 @@ async function addPerson(): Promise<void> {
           weightCategory,
           weapon
         });
-        persons.push(person);
-        await addPerson();
+        session.addPlayers([person]);
+        await addPlayer();
         break;
       case 'n':
-        printPlayers();
+        printPlayers(session.getPlayers());
+        await startGame();
         break;
       default:
         console.log('Veuillez répondre par Y (oui) ou N (non) ');
-        await addPerson();
+        await addPlayer();
         break;
     }
   } catch (e) {
     console.error(e);
-    await addPerson();
+    await addPlayer();
   }
 }
 
+async function startGame(): Promise<void> {
+  const answer = await reader.question('Voulez-vous lancer la partie ? [Y/N] ');
+  switch (answer.toLowerCase()) {
+    case 'y':
+      const game: Game = session.startGame().getGame();
+      console.log('Equipe A : ');
+      printPlayers(game.teamA.members);
+      console.log('Equipe B : ');
+      printPlayers(game.teamB.members);
+      break;
+    case 'n':
+      await addPlayer()
+      break;
+    default:
+      console.log('Veuillez répondre par Y (oui) ou N (non) ');
+      await startGame();
+      break;
+  }
+}
+
+
 async function run(): Promise<void> {
   await fileQuestion();
-  await addPerson();
+  await addPlayer();
+  await startGame();
 }
 
 run();
