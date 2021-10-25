@@ -1,9 +1,9 @@
 # COGNAC-BEHOURD
 
 ## Authors (I1 classe 2)
-DELABARRE Alexis
-BERNARDEAU Louis
-FOUQUET Bastien
+- DELABARRE Alexis 
+- BERNARDEAU Louis 
+- FOUQUET Bastien
 
 ## Install dependencies
 
