@@ -20,7 +20,9 @@ export class Team {
   public getAverageSeniority(): number {
     let totalSeniority = 0;
     for (const member of this.members) {
-      totalSeniority += member.getSeniority();
+      if (member.getSeniority()) {
+        totalSeniority += member.getSeniority();
+      }
     }
     return totalSeniority / this.members.length;
   }
