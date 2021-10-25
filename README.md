@@ -15,6 +15,8 @@
 `npm start
 `
 
+A file example is free to use at **files/Exemple.xlsx**
+
 ## Start tests
 
 `npm test
