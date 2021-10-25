@@ -8,33 +8,64 @@ export class Game {
   constructor(members: Person[]) {
     this.teamA = new Team();
     this.teamB = new Team();
-    this.balanceTeams([...members]);
+    this.balanceTeams(members);
   }
 
   public balanceTeams(members: Person[]) {
-    this.teamA.members.push(members[members.length - 1]);
-    members.pop();
-    this.teamB.members.push(members[members.length - 1]);
-    members.pop();
-    while (members.length >= 1) {
-      if (this.teamA.members.length > this.teamB.members.length) {
-        this.teamB.members.push(members[members.length - 1]);
-      } else if (this.teamA.members.length < this.teamB.members.length) {
-        this.teamA.members.push(members[members.length - 1]);
-      } else if (this.teamA.members.length === this.teamB.members.length) {
-        if (this.teamA.getAverageWeightCategory() > this.teamB.getAverageWeightCategory()) {
-          this.teamB.members.push(members[members.length - 1]);
-        } else if (this.teamA.getAverageWeightCategory() < this.teamB.getAverageWeightCategory()) {
-          this.teamA.members.push(members[members.length - 1]);
-        } else if (this.teamA.getAverageWeightCategory() === this.teamB.getAverageWeightCategory()) {
-          if (this.teamA.getAverageSeniority() > this.teamB.getAverageSeniority()) {
-            this.teamB.members.push(members[members.length - 1]);
-          } else {
-            this.teamA.members.push(members[members.length - 1]);
+    members.sort((a, b) => {
+      return a.weight - b.weight;
+    })
+    let odd = false;
+    for (const member of members) {
+      if (odd) {
+        this.teamA.members.push(member);
+      } else {
+        this.teamB.members.push(member);
+      }
+      odd = !odd;
+    }
+    if (this.teamA.members.length !== this.teamB.members.length) {
+      if (this.teamA.getAverageWeightCategory() !== this.teamB.getAverageWeightCategory()) {
+        this.teamA.members = [];
+        this.teamB.members = [];
+        for (const member of members) {
+          let averageWeightTeamA = this.teamA.getAverageWeightCategory();
+          let averageWeightTeamB = this.teamB.getAverageWeightCategory();
+          if ((!averageWeightTeamA && !averageWeightTeamB) ||
+            (averageWeightTeamA === averageWeightTeamB)) {
+            this.teamA.members.push(member);
+          } else if (!averageWeightTeamA ||
+            (averageWeightTeamA?.id < averageWeightTeamB?.id)) {
+            this.teamA.members.push(member);
+          } else if (!averageWeightTeamB ||
+            (averageWeightTeamB?.id < averageWeightTeamA?.id)) {
+            this.teamB.members.push(member);
           }
         }
       }
-      members.pop();
+      if (this.teamA.getAverageWeightCategory() !== this.teamB.getAverageWeightCategory()) {
+        if (this.teamA.getAverageSeniority() !== this.teamB.getAverageSeniority()) {
+          members.sort((a, b) => {
+            return a.getSeniority() - b.getSeniority();
+          })
+          this.teamA.members = [];
+          this.teamB.members = [];
+          for (const member of members) {
+            let averageSeniorityTeamA = this.teamA.getAverageSeniority();
+            let averageSeniorityTeamB = this.teamB.getAverageSeniority();
+            if ((!averageSeniorityTeamA && !averageSeniorityTeamB) ||
+              (averageSeniorityTeamA === averageSeniorityTeamB)) {
+              this.teamA.members.push(member);
+            } else if (!averageSeniorityTeamA ||
+              (averageSeniorityTeamA < averageSeniorityTeamB)) {
+              this.teamA.members.push(member);
+            } else if (!averageSeniorityTeamB ||
+              (averageSeniorityTeamB < averageSeniorityTeamA)) {
+              this.teamB.members.push(member);
+            }
+          }
+        }
+      }
     }
   }
 

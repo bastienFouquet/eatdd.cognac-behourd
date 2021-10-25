@@ -30,6 +30,7 @@ async function addPlayer(): Promise<void> {
     const isToAdd: string = await reader.question('Voulez-vous ajouter une personne ? [Y/N] ');
     switch (isToAdd.toLowerCase()) {
       case 'y':
+        console.log('Toute personne participante doit avoir plus de 16 ans !');
         const firstname = reader.question('Prénom : ');
         const lastname = reader.question('Nom : ');
         console.table(WeightCategoryService.getInstance().weightCategories);

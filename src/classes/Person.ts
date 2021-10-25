@@ -48,9 +48,12 @@ export class Person {
   }
 
   public getSeniority(): number {
-    const seniority = new Date().getFullYear() - this.yearRegistration;
-    if (Math.sign(seniority) === -1) {
-      throw new Error('Seniority cannnot be negative');
+    let seniority = 0;
+    if (this.yearRegistration) {
+      seniority = new Date().getFullYear() - this.yearRegistration;
+      if (Math.sign(seniority) === -1) {
+        throw new Error('Seniority cannnot be negative');
+      }
     }
     return seniority;
   }
