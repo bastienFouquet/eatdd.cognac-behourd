@@ -47,6 +47,23 @@ async function addPlayer(): Promise<void> {
         await addPlayer();
         break;
       case 'n':
+        break;
+      default:
+        console.log('Veuillez répondre par Y (oui) ou N (non) ');
+        await addPlayer();
+        break;
+    }
+    const isToRemove: string = await reader.question('Voulez-vous retirer une personne ? [Y/N] ');
+    switch (isToRemove.toLowerCase()) {
+      case 'y':
+        printPlayers(session.getPlayers());
+        const indexToRemove = reader.question('Indiquez l\'index du joueur à retirer : ');
+        const playerToRemove = session.getPlayers().find((el, index, self) => {
+          return self.indexOf(el) === indexToRemove;
+        })
+        session.removePlayers([playerToRemove]);
+        break;
+      case 'n':
         printPlayers(session.getPlayers());
         await startGame();
         break;
@@ -80,7 +97,6 @@ async function startGame(): Promise<void> {
       break;
   }
 }
-
 
 async function run(): Promise<void> {
   await fileQuestion();

@@ -19,7 +19,7 @@ describe('Game', () => {
       expect(teamALength).toEqual(teamBLength);
     })
     it('teams have same average weight category', () => {
-      expect(game.teamA.getAverageWeightCategory().id).toBeCloseTo(game.teamA.getAverageWeightCategory().id, 0);
+      expect(game.teamA.getAverageWeightCategory().id).toEqual(game.teamB.getAverageWeightCategory().id);
     })
     it('teams have almost same average seniority (+/- 5 years)', () => {
       expect(game.teamA.getAverageSeniority()).toBeCloseTo(game.teamB.getAverageSeniority(), -1);
@@ -30,15 +30,18 @@ describe('Game', () => {
       game = new Game(buildingMembers(9, 75, 81, 1980, 1985));
     });
     it('teams have same average weight category', () => {
-      expect(game.teamA.getAverageWeightCategory().id).toBeCloseTo(game.teamA.getAverageWeightCategory().id, 0);
+      expect(game.teamA.getAverageWeightCategory().id).toEqual(game.teamB.getAverageWeightCategory().id);
     })
   })
   describe('New game with seniority balanced teams', () => {
     beforeAll(() => {
-      game = new Game(buildingMembers(9, 45, 150, 1980, 1985));
+      game = new Game(buildingMembers(15, 45, 150, 1980, 1985));
     });
-    it('teams have same average weight category', () => {
-      expect(game.teamA.getAverageWeightCategory().id).toBeCloseTo(game.teamA.getAverageWeightCategory().id, 0);
+    it('teams have not same average weight category', () => {
+      expect(game.teamA.getAverageWeightCategory().id).not.toEqual(game.teamB.getAverageWeightCategory().id);
+    })
+    it('teams have almost same average seniority (+/- 5 years)', () => {
+      expect(game.teamA.getAverageSeniority()).toBeCloseTo(game.teamB.getAverageSeniority(), -1);
     })
   })
 })
